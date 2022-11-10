@@ -1,11 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<SynelEmployees.Models.EmployeeDisplayModel>
+
 @{
-    ViewData["Title"] = "Employees Page";
+    ViewData["Title"] = "Employees";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Employees Page</h1>
+
+<div>
+    <h2>Upload File</h2>
+    <form asp-controller="Employees" asp-action="UploadFile" enctype="multipart/form-data" method="post">
+        <input type="file" accept=".csv" name="file" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<br />
+
+<ejs-grid id="grid" dataSource="@Model" allowPaging="true" allowSorting="true" allowResizing="true" allowSelection="true"
+          toolbar="@(new List<string>() { "Edit", "Delete", "Update", "Cancel", "Search"})">
+    <e-grid-editSettings allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
+    <e-grid-pagesettings pageCount="5 "></e-grid-pagesettings>
+    <e-grid-columns>
+        <e-grid-column field="PayrollNumber" headerText="Payroll" textAlign="Center" width="100"></e-grid-column>
+        <e-grid-column field="Forename" headerText="Forename" textAlign="Center"></e-grid-column>
+        <e-grid-column field="Surname" headerText="Surname" textAlign="Center"></e-grid-column>
+        <e-grid-column field="BirthDate" headerText="Birth Date" textAlign="Center" format="yMd" editType="datepickeredit"></e-grid-column>
+        <e-grid-column field="Phone" headerText="Phone" textAlign="Center"></e-grid-column>
+        <e-grid-column field="CellPhone" headerText="Cell Phone" textAlign="Center"></e-grid-column>
+        <e-grid-column field="Email" headerText="Email" textAlign="Center" width="250"></e-grid-column>
+        <e-grid-column field="StreetAddress" headerText="Street Address" textAlign="Center" width="150"></e-grid-column>
+        <e-grid-column field="City" headerText="City" textAlign="Center"></e-grid-column>
+        <e-grid-column field="Postcode" headerText="Postcode" textAlign="Center"></e-grid-column>
+        <e-grid-column field="StartDate" headerText="Start Date" textAlign="Center" format="yMd" editType="datepickeredit"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<br />
+
+
+<div>
+    <form asp-controller="Employees" asp-action="Import" method="post">
+        <button type="submit">Import</button>
+    </form>
 </div>
