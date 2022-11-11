@@ -3,5 +3,5 @@
 namespace DataAccessLibrary.Data;
 public interface IEmployeesData
 {
-    Task<int> Add(IEnumerable<EmployeeModel> employees);
+    Task<int> Save(IEnumerable<EmployeeModel> employees);
 }

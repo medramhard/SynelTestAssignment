@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spEmployee_Add]
+    @Id int,
 	@PayrollNumber nvarchar(50),
     @Forename nvarchar(50),
     @Surname nvarchar(50),

@@ -4,19 +4,20 @@
     ViewData["Title"] = "Employees";
 }
 
-<h1>Employees Page</h1>
+<h1>Employees</h1>
+
+<br />
 
 <div>
-    <h2>Upload File</h2>
     <form asp-controller="Employees" asp-action="UploadFile" enctype="multipart/form-data" method="post">
         <input type="file" accept=".csv" name="file" />
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 
 <br />
 
-<ejs-grid id="LoadData" dataSource="ViewBag.datasource" allowPaging="true" allowSorting="true" allowResizing="true" allowSelection="true"
+<ejs-grid id="LoadData" dataSource="@Model" allowPaging="true" allowSorting="true" allowResizing="true" allowSelection="true"
           toolbar="@(new List<string>() { "Edit", "Delete", "Update", "Cancel", "Search"})">
     <e-grid-editSettings allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
     <e-grid-pagesettings pageCount="5 "></e-grid-pagesettings>
@@ -40,7 +41,9 @@
 
 
 <div>
-    <form asp-controller="Employees" asp-action="Import" method="post">
-        <button type="submit">Import</button>
+    <form asp-controller="Employees" asp-action="SaveData" method="post">
+        <button type="submit" class="btn btn-primary">Import</button>
     </form>
+    <br />
+    <div>@Html.Raw(ViewBag.RowsAffected)</div>
 </div>

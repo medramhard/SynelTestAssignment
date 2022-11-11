@@ -17,7 +17,7 @@ public class EmployeesData : IEmployeesData
         _db = db;
     }
 
-    public async Task<int> Add(IEnumerable<EmployeeModel> employees)
+    public async Task<int> Save(IEnumerable<EmployeeModel> employees)
     {
         int count = 0;
 

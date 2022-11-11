@@ -1,22 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using SynelEmployees.Models;
+using DataAccessLibrary.Data;
+using AutoMapper;
+using DataAccessLibrary.Models;
 
 namespace SynelEmployees.Controllers;
 public class EmployeesController : Controller
 {
     private readonly IWebHostEnvironment _env;
+    private readonly IEmployeesData _db;
+    private readonly IMapper _mapper;
+    private static string _rowsAffected = string.Empty;
     private static List<EmployeeDisplayModel> _employees = new();
 
-    public EmployeesController(IWebHostEnvironment env)
+    public EmployeesController(IWebHostEnvironment env, IEmployeesData db, IMapper mapper)
     {
         _env = env;
+        _db = db;
+        _mapper = mapper;
     }
 
     public IActionResult Index()
     {
-        ViewBag.datasource = _employees;
-        return View();
+        ViewBag.RowsAffected = _rowsAffected;
+        return View(_employees);
     }
 
     private List<EmployeeDisplayModel> GetAllEmployees()
@@ -85,6 +93,16 @@ public class EmployeesController : Controller
     public IActionResult LoadData()
     {
         _employees = GetAllEmployees();
+
+        return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> SaveData()
+    {
+        List<EmployeeModel> employees = _mapper.Map<List<EmployeeModel>>(_employees);
+        int rowsAffected = await _db.Save(employees);
+        _rowsAffected = string.Format("Number of rows affected: {0}", rowsAffected);
+        _employees = new();
 
         return RedirectToAction("Index");
     }
