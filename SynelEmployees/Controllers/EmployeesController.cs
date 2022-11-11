@@ -6,6 +6,7 @@ namespace SynelEmployees.Controllers;
 public class EmployeesController : Controller
 {
     private readonly IWebHostEnvironment _env;
+    private static List<EmployeeDisplayModel> _employees = new();
 
     public EmployeesController(IWebHostEnvironment env)
     {
@@ -14,15 +15,13 @@ public class EmployeesController : Controller
 
     public IActionResult Index()
     {
-        var filePath = $"{_env.ContentRootPath }Files\\dataset.csv";
-        List<EmployeeDisplayModel> employees = new();
-        employees = GetAllEmployees(filePath);
-
-        return View(employees);
+        ViewBag.datasource = _employees;
+        return View();
     }
 
-    private List<EmployeeDisplayModel> GetAllEmployees(string filePath)
+    private List<EmployeeDisplayModel> GetAllEmployees()
     {
+        var filePath = $"{_env.ContentRootPath}Files\\dataset.csv";
         List<EmployeeDisplayModel> output = new();
         List<string> records = GetRecords(filePath);
 
@@ -79,6 +78,13 @@ public class EmployeesController : Controller
             using var fileStream = new FileStream(Path.Combine(dir, "dataset.csv"), FileMode.Create, FileAccess.Write);
             file.CopyTo(fileStream);
         }
+
+        return RedirectToAction("LoadData");
+    }
+
+    public IActionResult LoadData()
+    {
+        _employees = GetAllEmployees();
 
         return RedirectToAction("Index");
     }
