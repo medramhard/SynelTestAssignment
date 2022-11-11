@@ -4,6 +4,7 @@ using SynelEmployees.Models;
 using DataAccessLibrary.Data;
 using AutoMapper;
 using DataAccessLibrary.Models;
+using Syncfusion.EJ2.Base;
 
 namespace SynelEmployees.Controllers;
 public class EmployeesController : Controller
@@ -19,12 +20,6 @@ public class EmployeesController : Controller
         _env = env;
         _db = db;
         _mapper = mapper;
-    }
-
-    public IActionResult Index()
-    {
-        ViewBag.RowsAffected = _rowsAffected;
-        return View(_employees);
     }
 
     private List<EmployeeDisplayModel> GetAllEmployees()
@@ -76,7 +71,12 @@ public class EmployeesController : Controller
         return file;
     }
 
-    [HttpPost]
+    public IActionResult Index()
+    {
+        ViewBag.RowsAffected = _rowsAffected;
+        return View(_employees);
+    }
+
     public IActionResult UploadFile(IFormFile file)
     {
         var dir = $"{_env.ContentRootPath }Files";
@@ -95,6 +95,27 @@ public class EmployeesController : Controller
         _employees = GetAllEmployees();
 
         return RedirectToAction("Index");
+    }
+
+    public IActionResult UpdateData([FromBody]CRUDModel<EmployeeDisplayModel> employee)
+    {
+        var row = _employees.Where(e => e.PayrollNumber == employee.Value.PayrollNumber).FirstOrDefault();
+        if (row != null)
+        {
+            row.PayrollNumber = employee.Value.PayrollNumber;
+            row.Forename= employee.Value.Forename;
+            row.Surname = employee.Value.Surname;
+            row.BirthDate = employee.Value.BirthDate;
+            row.Phone= employee.Value.Phone;
+            row.CellPhone= employee.Value.CellPhone;
+            row.StreetAddress = employee.Value.StreetAddress;
+            row.City = employee.Value.City;
+            row.Postcode = employee.Value.Postcode;
+            row.Email = employee.Value.Email;
+            row.StartDate = employee.Value.StartDate;
+        }
+
+        return Json(employee.Value);
     }
 
     public async Task<IActionResult> SaveData()

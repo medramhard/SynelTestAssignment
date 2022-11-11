@@ -18,11 +18,12 @@
 <br />
 
 <ejs-grid id="LoadData" dataSource="@Model" allowPaging="true" allowSorting="true" allowResizing="true" allowSelection="true"
-          toolbar="@(new List<string>() { "Edit", "Delete", "Update", "Cancel", "Search"})">
-    <e-grid-editSettings allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
+          toolbar="@(new List<string>() { "Edit", "Update", "Cancel", "Search"})">
+    <e-grid-editSettings allowEditing="true" mode="Normal"></e-grid-editSettings>
     <e-grid-pagesettings pageCount="5 "></e-grid-pagesettings>
+    <e-data-manager json="@Model.ToArray()" adaptor="RemoteSaveAdaptor" updateUrl="/Employees/UpdateData"></e-data-manager>
     <e-grid-columns>
-        <e-grid-column field="PayrollNumber" headerText="Payroll" textAlign="Center" width="100"></e-grid-column>
+        <e-grid-column field="PayrollNumber" headerText="Payroll" textAlign="Center" width="100" allowEditing="false"></e-grid-column>
         <e-grid-column field="Forename" headerText="Forename" textAlign="Center"></e-grid-column>
         <e-grid-column field="Surname" headerText="Surname" textAlign="Center"></e-grid-column>
         <e-grid-column field="BirthDate" headerText="Birth Date" textAlign="Center" format="yMd" editType="datepickeredit"></e-grid-column>

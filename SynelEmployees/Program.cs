@@ -1,5 +1,6 @@
 using DataAccessLibrary.Data;
 using DataAccessLibrary.DataAccess;
+using Newtonsoft.Json.Serialization;
 using SynelEmployees.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
