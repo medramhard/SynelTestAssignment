@@ -79,6 +79,7 @@ public class EmployeesController : Controller
 
     public IActionResult UploadFile(IFormFile file)
     {
+        Directory.CreateDirectory($"{_env.ContentRootPath}Files");
         var dir = $"{_env.ContentRootPath }Files";
 
         if (file?.Length > 0)
