@@ -25,8 +25,16 @@ public class EmployeesController : Controller
     private List<EmployeeDisplayModel> GetAllEmployees()
     {
         var filePath = $"{_env.ContentRootPath}Files\\dataset.csv";
-        List<EmployeeDisplayModel> output = new();
+
         List<string> records = GetRecords(filePath);
+        List<EmployeeDisplayModel> output = PopulateList(records);
+
+        return output;
+    }
+
+    private List<EmployeeDisplayModel> PopulateList(List<string> records)
+    {
+        List<EmployeeDisplayModel> output = new();
 
         foreach (var record in records)
         {
@@ -34,7 +42,7 @@ public class EmployeesController : Controller
 
             if (values.Length < 11)
             {
-                throw new Exception("Invalid record");
+                throw new Exception("The file has less column than it should!");
             }
 
             EmployeeDisplayModel employee = new()
@@ -80,7 +88,7 @@ public class EmployeesController : Controller
     public IActionResult UploadFile(IFormFile file)
     {
         Directory.CreateDirectory($"{_env.ContentRootPath}Files");
-        var dir = $"{_env.ContentRootPath }Files";
+        var dir = $"{_env.ContentRootPath}Files";
 
         if (file?.Length > 0)
         {
@@ -98,17 +106,17 @@ public class EmployeesController : Controller
         return RedirectToAction("Index");
     }
 
-    public IActionResult UpdateData([FromBody]CRUDModel<EmployeeDisplayModel> employee)
+    public IActionResult UpdateData([FromBody] CRUDModel<EmployeeDisplayModel> employee)
     {
         var row = _employees.Where(e => e.PayrollNumber == employee.Value.PayrollNumber).FirstOrDefault();
         if (row != null)
         {
             row.PayrollNumber = employee.Value.PayrollNumber;
-            row.Forename= employee.Value.Forename;
+            row.Forename = employee.Value.Forename;
             row.Surname = employee.Value.Surname;
             row.BirthDate = employee.Value.BirthDate;
-            row.Phone= employee.Value.Phone;
-            row.CellPhone= employee.Value.CellPhone;
+            row.Phone = employee.Value.Phone;
+            row.CellPhone = employee.Value.CellPhone;
             row.StreetAddress = employee.Value.StreetAddress;
             row.City = employee.Value.City;
             row.Postcode = employee.Value.Postcode;

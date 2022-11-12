@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SynelEmployees.Tests
+namespace SynelEmployees.Tests;
+
+public class EmployeesControllerTests
 {
-    internal class EmployeesControllerTests
-    {
-    }
 }

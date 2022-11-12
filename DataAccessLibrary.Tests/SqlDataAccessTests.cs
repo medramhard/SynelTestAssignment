@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLibrary.Tests
+namespace DataAccessLibrary.Tests;
+
+public class SqlDataAccessTests
 {
-    internal class SqlDataAccessTests
-    {
-    }
 }
