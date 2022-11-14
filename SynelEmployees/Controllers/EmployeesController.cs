@@ -130,7 +130,7 @@ public class EmployeesController : Controller
     public async Task<IActionResult> SaveData()
     {
         List<EmployeeModel> employees = _mapper.Map<List<EmployeeModel>>(_employees);
-        int rowsAffected = await _db.Save(employees);
+        int rowsAffected = await _db.SaveAll(employees);
         _rowsAffected = string.Format("Number of rows affected: {0}", rowsAffected);
         _employees = new();
 

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLibrary.Data;
 
+
 public class EmployeesData : IEmployeesData
 {
     private readonly ISqlDataAccess _db;
@@ -17,7 +18,7 @@ public class EmployeesData : IEmployeesData
         _db = db;
     }
 
-    public async Task<int> Save(IEnumerable<EmployeeModel> employees)
+    public async Task<int> SaveAll(IEnumerable<EmployeeModel> employees)
     {
         int count = 0;
 
