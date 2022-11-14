@@ -24,9 +24,9 @@ public class EmployeesController : Controller
 
     private List<EmployeeDisplayModel> GetAllEmployees()
     {
-        var filePath = $"{_env.ContentRootPath}Files\\dataset.csv";
+        var filePath = $"{GetDirectory()}\\dataset.csv";
 
-        List<string> records = GetRecords(filePath);
+        List<string> records = GetRecordsOfFile(filePath);
         List<EmployeeDisplayModel> output = PopulateList(records);
 
         return output;
@@ -66,7 +66,7 @@ public class EmployeesController : Controller
         return output;
     }
 
-    private List<string> GetRecords(string filePath)
+    private List<string> GetRecordsOfFile(string filePath)
     {
         if (System.IO.File.Exists(filePath) == false)
         {
@@ -79,6 +79,13 @@ public class EmployeesController : Controller
         return file;
     }
 
+    private string GetDirectory()
+    {
+        Directory.CreateDirectory($"{_env.ContentRootPath}Files");
+        var dir = $"{_env.ContentRootPath}Files";
+        return dir;
+    }
+
     public IActionResult Index()
     {
         ViewBag.RowsAffected = _rowsAffected;
@@ -87,8 +94,7 @@ public class EmployeesController : Controller
 
     public IActionResult UploadFile(IFormFile file)
     {
-        Directory.CreateDirectory($"{_env.ContentRootPath}Files");
-        var dir = $"{_env.ContentRootPath}Files";
+        var dir = GetDirectory();
 
         if (file?.Length > 0)
         {
