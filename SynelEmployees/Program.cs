@@ -11,6 +11,7 @@ builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<IEmployeesData, EmployeesData>();
 
+// Licensing of the Syncfusion product which is used in the Employees View to create an editable grid
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBPh8sVXJ0S0V+XE9AcVRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS3xSd0RjWH1ed3RSQ2ZUWQ==");
 
 var app = builder.Build();

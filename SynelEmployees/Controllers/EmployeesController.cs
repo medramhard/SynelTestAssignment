@@ -47,16 +47,16 @@ public class EmployeesController : Controller
 
             EmployeeDisplayModel employee = new()
             {
-                PayrollNumber = values[0],
-                Forename = values[1],
-                Surname = values[2],
+                PayrollNumber = values[0].Trim(),
+                Forename = values[1].Trim(),
+                Surname = values[2].Trim(),
                 BirthDate = DateTime.Parse(values[3]),
-                Phone = values[4],
-                CellPhone = values[5],
-                StreetAddress = values[6],
-                City = values[7],
-                Postcode = values[8],
-                Email = values[9],
+                Phone = values[4].Trim(),
+                CellPhone = values[5].Trim(),
+                StreetAddress = values[6].Trim(),
+                City = values[7].Trim(),
+                Postcode = values[8].Trim(),
+                Email = values[9].Trim(),
                 StartDate = DateTime.Parse(values[10])
             };
 
